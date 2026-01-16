@@ -104,3 +104,10 @@ Essa abordagem reduz custos operacionais, escala automaticamente e elimina a nec
 📌 Conclusão:
 
 A escolha entre EC2 ou Serverless depende do volume de acessos e da necessidade de escalabilidade da aplicação.
+
+
+
+## 👤 Autor
+
+Desenvolvido por Fellipe Carneiro  
+Desafio técnico – Aplicação teste-angular
