@@ -56,7 +56,7 @@ router.get('/tasks', authMiddleware, TaskController.listPending);
 /**
  * @swagger
  * /tasks/{id}/complete:
- *   put:
+ *   patch:
  *     summary: Concluir tarefa
  *     tags: [Tasks]
  *     security:
@@ -71,4 +71,5 @@ router.get('/tasks', authMiddleware, TaskController.listPending);
  *       204:
  *         description: Tarefa concluída
  */
-router.put('/tasks/:id/complete', authMiddleware, TaskController.complete);
+router.patch('/tasks/:id/complete', authMiddleware, TaskController.complete);
+

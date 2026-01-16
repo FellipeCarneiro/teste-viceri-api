@@ -12,10 +12,18 @@ const taskRoutes = require('./src/routes/task.routes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./src/swagger');
 
+const cors = require('cors');
+
 const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
+
+app.use(cors({
+  origin: 'http://localhost:4200',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(authRoutes);
 app.use(protectedRoutes);

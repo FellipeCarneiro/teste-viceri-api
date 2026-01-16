@@ -72,7 +72,11 @@ Passos:
 
 - Clonar o repositório da aplicação
 
-- Configurar as variáveis de ambiente (.env)
+  - Configurar as variáveis de ambiente (.env)
+  - 
+           PORT=3000
+           JWT_SECRET=123456
+           JWT_EXPIRES_IN=1d
 
 - Instalar dependências (npm install)
 
