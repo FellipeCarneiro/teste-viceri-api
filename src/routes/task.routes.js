@@ -4,11 +4,26 @@ const authMiddleware = require('../middlewares/auth.middleware');
 
 const router = express.Router();
 
-router.post('/tasks', authMiddleware, TaskController.create);
-router.get('/tasks', authMiddleware, TaskController.listPending);
-router.put('/tasks/:id/complete', authMiddleware, TaskController.complete);
-
-module.exports = router;
+/**
+ * @swagger
+ * /tasks:
+ *   get:
+ *     summary: Listar tarefas
+ *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *           enum: [pending, completed]
+ *         description: Filtrar por status da tarefa
+ *     responses:
+ *       200:
+ *         description: Lista de tarefas
+ */
+router.get('/tasks', authMiddleware, TaskController.list);
 
 /**
  * @swagger
@@ -41,20 +56,6 @@ router.post('/tasks', authMiddleware, TaskController.create);
 
 /**
  * @swagger
- * /tasks:
- *   get:
- *     summary: Listar tarefas pendentes
- *     tags: [Tasks]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Lista de tarefas
- */
-router.get('/tasks', authMiddleware, TaskController.listPending);
-
-/**
- * @swagger
  * /tasks/{id}/complete:
  *   patch:
  *     summary: Concluir tarefa
@@ -73,3 +74,59 @@ router.get('/tasks', authMiddleware, TaskController.listPending);
  */
 router.patch('/tasks/:id/complete', authMiddleware, TaskController.complete);
 
+/**
+ * @swagger
+ * /tasks/{id}:
+ *   put:
+ *     summary: Editar tarefa
+ *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - description
+ *               - priority
+ *             properties:
+ *               description:
+ *                 type: string
+ *               priority:
+ *                 type: string
+ *                 enum: [Alta, Média, Baixa]
+ *     responses:
+ *       204:
+ *         description: Tarefa atualizada
+ */
+router.put('/tasks/:id', authMiddleware, TaskController.update);
+
+/**
+ * @swagger
+ * /tasks/{id}:
+ *   delete:
+ *     summary: Excluir tarefa
+ *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       204:
+ *         description: Tarefa excluída
+ */
+router.delete('/tasks/:id', authMiddleware, TaskController.delete);
+
+module.exports = router;
